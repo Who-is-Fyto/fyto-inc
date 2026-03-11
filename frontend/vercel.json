@@ -1,7 +1,11 @@
 {
   "version": 2,
   "public": true,
+  "cleanUrls": true,
   "rewrites": [
-    { "source": "/(.*)", "destination": "/src/pages/$1" }
+    { "source": "/css/(.*)", "destination": "/src/css/$1" },
+    { "source": "/js/(.*)", "destination": "/src/js/$1" },
+    { "source": "/assets/(.*)", "destination": "/src/assets/$1" },
+    { "source": "/(.*)", "destination": "/src/pages/index.html" }
   ]
 }
