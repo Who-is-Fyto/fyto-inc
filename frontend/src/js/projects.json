@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Smart Urban Road Safety Tracker",
+    "description": "A Python-powered web application using FastAPI to enhance pedestrian safety through real-time tracking.",
+    "tags": ["Python", "FastAPI", "IoT"],
+    "link": "#"
+  },
+  {
+    "title": "Fytò Inc. Brand Launch",
+    "description": "Custom-built portfolio and business identity featuring a Python backend and responsive frontend.",
+    "tags": ["JavaScript", "CSS", "Python"],
+    "link": "#"
+  },
+  {
+    "title": "PolySync",
+    "description": "A full-stack practice project integrating React, Tailwind, C#, and Python.",
+    "tags": ["React", "C#", "Python"],
+    "link": "#"
+  }
+]

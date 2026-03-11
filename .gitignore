@@ -1,0 +1,18 @@
+# --- Python / Backend ---
+__pycache__/
+*.py[cod]
+*$py.class
+vent/
+.env
+db.sqlite3
+
+# --- Node / Frontend ---
+node_module/
+.DS_Store
+dist/
+build/
+
+# --- IDEs & Editors ---
+.vscode/
+.idea/
+*.swp
