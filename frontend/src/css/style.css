@@ -16,14 +16,19 @@
   box-sizing: border-box;
 }
 
+/* Hamburger hidden on desktop by default */
+.hamburger {
+  display: none;
+}
+
 @media (max-width: 768px) {
-    /* Hide the standard list and style the mobile overlay */
+    /* Mobile nav: slide-in panel, hidden off-screen by default */
     nav ul {
         display: flex;
         flex-direction: column;
         position: fixed;
         top: 0;
-        right: -100%; /* Hidden off-screen */
+        right: -100%;
         width: 80%;
         height: 100vh;
         background: rgba(10, 10, 10, 0.98);
@@ -31,13 +36,14 @@
         padding: 100px 10% 0 10%;
         transition: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
         border-left: 1px solid var(--glass-white);
+        z-index: 1500;
     }
 
     nav.active ul {
-        right: 0; /* Slide in */
+        right: 0;
     }
 
-    /* Hamburger Icon Styling */
+    /* Hamburger visible on mobile */
     .hamburger {
         display: block;
         cursor: pointer;
@@ -65,7 +71,7 @@ html {
 }
 
 body {
-  background: linear-gradient(135deg, #0a0a0a 0%, #0f1412 50%, #0a0a0a 100%);
+  background: linear-gradient(135deg, #0a0a0a 0%, #0d1a12 25%, #0a0a0a 50%, #071510 75%, #0a0a0a 100%);
   background-size: 400% 400%;
   animation: silkyFlow 15s ease infinite;
   color: var(--text-white);
@@ -141,10 +147,12 @@ nav a:hover {
   font-size: clamp(2.5rem, 8vw, 5rem);
   font-weight: 900;
   line-height: 1.1;
-  margin: 0; /* Let flex gap handle spacing */
+  margin: 0;
   background: var(--silky-gradient);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
+  color: var(--fyto-green); /* Fallback for unsupported browsers */
 }
 
 .hero p {
@@ -216,6 +224,20 @@ nav a:hover {
   padding: 2.5rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   transition: 0.4s ease;
+}
+
+.project-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-white);
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.project-card p {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.6;
 }
 
 .project-card:hover {
