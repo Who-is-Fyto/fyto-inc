@@ -3,6 +3,12 @@
  * Specializing in Python Backends & Responsive Web Experiences
  */
 
+// CONFIG — swap this to your deployed backend URL before going live
+// e.g. "https://fyto-api.onrender.com"
+const API_BASE = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+  ? "http://127.0.0.1:8000"
+  : "https://YOUR_DEPLOYED_BACKEND_URL_HERE";
+
 // 1. Project Data (Fallback for local 'file://' access)
 const backupProjects = [
   {
@@ -39,7 +45,7 @@ function displayProjects(data) {
 // Logic to load projects (JSON Fetch -> Fallback)
 async function initGreenhouse() {
     try {
-        const response = await fetch('../../js/projects.json');
+        const response = await fetch('/js/projects.json');
         if (!response.ok) throw new Error('Offline');
         const projects = await response.json();
         displayProjects(projects);
@@ -65,6 +71,14 @@ if (hamburger && navMenu) {
             navMenu.classList.remove('active');
         });
     });
+
+    // Close nav when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        }
+    });
 }
 
 // 3. Silky Contact Form UX
@@ -89,7 +103,7 @@ if (contactForm) {
         };
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/contact', {
+            const response = await fetch(`${API_BASE}/contact`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -104,7 +118,7 @@ if (contactForm) {
                 
                 setTimeout(() => {
                     submitBtn.innerText = originalText;
-                    submitBtn.style = "";
+                    submitBtn.removeAttribute('style');
                     submitBtn.disabled = false;
                 }, 3000);
             } else {
@@ -116,7 +130,7 @@ if (contactForm) {
             submitBtn.style.background = "#ff4444";
             setTimeout(() => {
                 submitBtn.innerText = originalText;
-                submitBtn.style = "";
+                submitBtn.removeAttribute('style');
                 submitBtn.disabled = false;
             }, 3000);
         }

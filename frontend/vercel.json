@@ -5,7 +5,7 @@
   "rewrites": [
     { "source": "/css/(.*)", "destination": "/src/css/$1" },
     { "source": "/js/(.*)", "destination": "/src/js/$1" },
-    { "source": "/assets/(.*)", "destination": "/src/assets/$1" },
+    { "source": "/assets/(.*)", "destination": "/assets/$1" },
     { "source": "/(.*)", "destination": "/src/pages/index.html" }
   ]
 }
