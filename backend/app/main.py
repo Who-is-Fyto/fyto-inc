@@ -5,14 +5,14 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, Field
 from typing import List, Optional
 from datetime import datetime
-import requests # Added for simple Resend API call
+import httpx # Upgraded to async HTTP client
 
 # --- CONFIGURATION ---
 MONGO_URI = os.getenv("MONGO_URI", "mongodb+srv://Chipapa:3vO1gONCY614h8Do@fytoinc.vlzilq6.mongodb.net/?retryWrites=true&w=majority&tls=true")
 ADMIN_SECRET_KEY = os.getenv("ADMIN_SECRET_KEY", "FYTO_SECRET_2026_SQUAD")
 RESEND_API_KEY = os.getenv("RESEND_API_KEY", "re_fEoAskoF_C7csh5N2tAoSGLarzLwzJPzU")
 DB_NAME = "fyto_portfolio"
-MY_EMAIL = "mtmazhambe@gmail.com" # Updated to your primary personal email
+MY_EMAIL = "mtmazhambe@gmail.com"
 
 app = FastAPI(title="Fytò Inc. API")
 
@@ -71,23 +71,29 @@ async def get_status():
 
 @app.post("/contact")
 async def send_contact_email(form: ContactForm):
-    """The Signal Relay: Sends form data to your email via Resend."""
+    """The Signal Relay: Now fully async using httpx."""
     try:
-        response = requests.post(
-            "https://api.resend.com/emails",
-            headers={"Authorization": f"Bearer {RESEND_API_KEY}", "Content-Type": "application/json"},
-            json={
-                "from": "Fytò Inc. <onboarding@resend.dev>", # Resend uses this for unverified domains
-                "to": [MY_EMAIL],
-                "subject": f"New Signal from {form.name}",
-                "html": f"<strong>Name:</strong> {form.name}<br><strong>Email:</strong> {form.email}<br><br><strong>Message:</strong><br>{form.message}"
-            }
-        )
-        if response.status_code != 200:
-            raise HTTPException(status_code=500, detail="Email relay failed")
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                "https://api.resend.com/emails",
+                headers={"Authorization": f"Bearer {RESEND_API_KEY}", "Content-Type": "application/json"},
+                json={
+                    "from": "Fytò Inc. <onboarding@resend.dev>",
+                    "to": [MY_EMAIL],
+                    "subject": f"New Signal from {form.name}",
+                    "html": f"<strong>Name:</strong> {form.name}<br><strong>Email:</strong> {form.email}<br><br><strong>Message:</strong><br>{form.message}"
+                }
+            )
+            
+            if response.status_code != 200:
+                # Log the actual error from Resend for easier debugging
+                print(f"Resend Error: {response.text}")
+                raise HTTPException(status_code=response.status_code, detail="Resend API rejected the signal")
+                
         return {"message": "Signal transmitted successfully"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        print(f"System Error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Relay failure: {str(e)}")
 
 # --- ADMIN ENDPOINTS (PROTECTED) ---
 
