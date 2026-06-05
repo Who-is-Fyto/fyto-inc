@@ -8,7 +8,7 @@ const API_BASE = window.location.hostname === "localhost" || window.location.hos
   ? "http://127.0.0.1:8000"
   : "https://fyto-inc.onrender.com"; 
 
-const ADMIN_KEY = "FYTO_SECRET_2026_SQUAD";
+const ADMIN_KEY = "FYTO_S…QUAD";
 
 // --- 1. GREENHOUSE & STATUS ENGINE ---
 async function updateStatusBadge() {
@@ -192,9 +192,22 @@ if (contactForm) {
     });
 }
 
+// --- 5. SENTRY GLOW ENGINE ---
+function initSentryGlow() {
+    const glow = document.createElement('div');
+    glow.className = 'cursor-glow';
+    document.body.appendChild(glow);
+
+    window.addEventListener('mousemove', (e) => {
+        glow.style.left = e.clientX + 'px';
+        glow.style.top = e.clientY + 'px';
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     initGreenhouse();
     updateStatusBadge();
+    initSentryGlow();
     
     document.body.insertAdjacentHTML('beforeend', `
         <div id="admin-hud" class="admin-hud">
