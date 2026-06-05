@@ -486,6 +486,55 @@ details p {
   transition: width 0.3s, height 0.3s;
 }
 
+/* --- GLITCH & NOTIFICATION STYLING --- */
+.system-toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 255, 136, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--fyto-green);
+  color: var(--fyto-green);
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  z-index: 10000;
+  transition: 0.3s ease;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.system-toast.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.glitch-flash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--fyto-green);
+  opacity: 0;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+@keyframes glitchEffect {
+  0% { opacity: 0.2; transform: scale(1); }
+  20% { opacity: 0.1; transform: scale(1.01); }
+  40% { opacity: 0.2; transform: scale(0.99); }
+  60% { opacity: 0.1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1); }
+}
+
+.glitch-active {
+  animation: glitchEffect 0.2s ease-in-out 3;
+}
+
 /* --- ADMIN HUD STYLING --- */
 .admin-hud {
   position: fixed;

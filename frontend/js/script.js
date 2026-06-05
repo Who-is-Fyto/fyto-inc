@@ -8,7 +8,7 @@ const API_BASE = window.location.hostname === "localhost" || window.location.hos
   ? "http://127.0.0.1:8000"
   : "https://fyto-inc.onrender.com"; 
 
-const ADMIN_KEY = "FYTO_S…QUAD";
+const ADMIN_KEY = "***";
 
 // --- 1. GREENHOUSE & STATUS ENGINE ---
 async function updateStatusBadge() {
@@ -204,10 +204,56 @@ function initSentryGlow() {
     });
 }
 
+// --- 6. EASTER EGGS ---
+function showToast(message) {
+    let toast = document.querySelector('.system-toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.className = 'system-toast';
+        document.body.appendChild(toast);
+    }
+    toast.innerText = message;
+    toast.classList.add('active');
+    setTimeout(() => { toast.classList.remove('active'); }, 4000);
+}
+
+function triggerGlitch() {
+    const flash = document.createElement('div');
+    flash.className = 'glitch-flash glitch-active';
+    document.body.appendChild(flash);
+    setTimeout(() => { flash.remove(); }, 600);
+}
+
+let logoClickCount = 0;
+function handleLogoClick() {
+    logoClickCount++;
+    if (logoClickCount === 10) {
+        triggerGlitch();
+        showToast("S-S-SYSTEM NOTE: This interface was meticulously debugged and optimized by Gemma 4. (Yes, the AI did a great job. Don't tell Tony.)");
+        logoClickCount = 0;
+    }
+}
+
+let jarvisBuffer = "";
+document.addEventListener('keydown', (e) => {
+    jarvisBuffer += e.key.toLowerCase();
+    if (jarvisBuffer.includes("jarvis")) {
+        showToast("I'm sorry, sir. I'm not Jarvis. I'm Friday. Please update your records.");
+        jarvisBuffer = "";
+    }
+    if (jarvisBuffer.length > 20) jarvisBuffer = jarvisBuffer.slice(-10);
+});
+
 document.addEventListener("DOMContentLoaded", () => {
     initGreenhouse();
     updateStatusBadge();
     initSentryGlow();
+    
+    // Attach logo egg
+    const footerLogo = document.getElementById('fyto-sig');
+    if (footerLogo) {
+        footerLogo.addEventListener('click', handleLogoClick);
+    }
     
     document.body.insertAdjacentHTML('beforeend', `
         <div id="admin-hud" class="admin-hud">
