@@ -64,7 +64,6 @@ function triggerAdminHUD() {
     if (hud) hud.classList.add('active');
 }
 
-// Desktop Key Listener
 document.addEventListener('keydown', (e) => {
     if (e.key === konamiCode[konamiIndex]) {
         konamiIndex++;
@@ -77,7 +76,6 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Mobile Swipe Listener (Simplified Konami-style swipes)
 let touchStartX = 0;
 let touchStartY = 0;
 let swipeSequence = [];
@@ -154,23 +152,42 @@ if (contactForm) {
         e.preventDefault();
         const submitBtn = contactForm.querySelector('button');
         const originalText = submitBtn.innerText;
+        
         submitBtn.innerText = "Transmitting...";
         submitBtn.disabled = true;
+        submitBtn.style.opacity = "0.7";
 
         try {
             const response = await fetch(`${API_BASE}/contact`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: contactForm.name.value, email: contactForm.email.value, message: contactForm.message.value })
+                body: JSON.stringify({ 
+                    name: contactForm.name.value, 
+                    email: contactForm.email.value, 
+                    message: contactForm.message.value 
+                })
             });
+
             if (response.ok) {
                 submitBtn.innerText = "Signal Received ✓";
+                submitBtn.style.background = "var(--fyto-green)";
+                submitBtn.style.color = "#000";
                 contactForm.reset();
-                setTimeout(() => { submitBtn.innerText = originalText; submitBtn.disabled = false; }, 3000);
+                setTimeout(() => { 
+                    submitBtn.innerText = originalText; 
+                    submitBtn.removeAttribute('style'); 
+                    submitBtn.disabled = false; 
+                }, 3000);
+            } else {
+                throw new Error('Signal Interrupted');
             }
         } catch (error) {
             submitBtn.innerText = "Systems Offline";
-            setTimeout(() => { submitBtn.innerText = originalText; submitBtn.disabled = false; }, 3000);
+            submitBtn.style.background = "#ff4444";
+            setTimeout(() => { 
+                submitBtn.innerText = originalText; 
+                submitBtn.disabled = false; 
+            }, 3000);
         }
     });
 }
@@ -179,7 +196,6 @@ document.addEventListener("DOMContentLoaded", () => {
     initGreenhouse();
     updateStatusBadge();
     
-    // Inject the Admin HUD into the body
     document.body.insertAdjacentHTML('beforeend', `
         <div id="admin-hud" class="admin-hud">
             <div class="hud-header">
