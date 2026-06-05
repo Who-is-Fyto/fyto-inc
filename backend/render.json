@@ -1,0 +1,6 @@
+{
+  "env": {
+    "PORT": "10000",
+    "MONGO_URI": "mongodb+srv://Chipapa:3vO1gONCY614h8Do@fytoinc.vlzilq6.mongodb.net/?retryWrites=true&w=majority"
+  }
+}
