@@ -12,7 +12,7 @@ MONGO_URI = os.getenv("MONGO_URI", "mongodb+srv://Chipapa:3vO1gONCY614h8Do@fytoi
 ADMIN_SECRET_KEY = os.getenv("ADMIN_SECRET_KEY", "FYTO_SECRET_2026_SQUAD")
 RESEND_API_KEY = os.getenv("RESEND_API_KEY", "re_fEoAskoF_C7csh5N2tAoSGLarzLwzJPzU")
 DB_NAME = "fyto_portfolio"
-MY_EMAIL = "mtmazhambe@gmail.com"
+MY_EMAIL = "402100810@my.richfield.ac.za" # Updated to the Resend account email for verification
 
 app = FastAPI(title="Fytò Inc. API")
 
