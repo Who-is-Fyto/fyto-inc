@@ -115,7 +115,7 @@ async function handleAdminAction(endpoint, data, method = 'POST') {
             method: method,
             headers: { 
                 'Content-Type': 'application/json',
-                'a-admin-key': ADMIN_KEY 
+                'X-Admin-Key': ADMIN_KEY 
             },
             body: JSON.stringify(data)
         });
