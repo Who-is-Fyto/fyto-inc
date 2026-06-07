@@ -8,7 +8,7 @@ const API_BASE = window.location.hostname === "localhost" || window.location.hos
   ? "http://127.0.0.1:8000"
   : "https://fyto-inc.onrender.com"; 
 
-const ADMIN_KEY = "***";
+const ADMIN_KEY = "FYTO_SECRET_2026_SQUAD";
 
 // --- 1. GREENHOUSE & STATUS ENGINE ---
 async function updateStatusBadge() {
